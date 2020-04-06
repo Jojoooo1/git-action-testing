@@ -1,4 +1,4 @@
-name: CI for feature branch
+name: CI
 
 on: [pull_request, push]
 
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: echo ${GITHUB_BRANCH}
-        run: echo ${GITHUB_BRANCH}
+        run: echo "$GITHUB_BRANCH"
 
       - name: Branch name
         id: branch_name
