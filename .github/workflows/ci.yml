@@ -34,14 +34,12 @@ jobs:
   extract-branch:
     runs-on: ubuntu-latest
     steps:
-      - name: Branch name
+      - name: Output $SOURCE_BRANCH
         id: branch_name
         run: |
           echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF##*/}
-      - name: Build base image
+      - name: echo $SOURCE_BRANCH
         run: |
-          echo $SOURCE_NAME
           echo $SOURCE_BRANCH
-          echo $SOURCE_TAG
         env:
           SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
