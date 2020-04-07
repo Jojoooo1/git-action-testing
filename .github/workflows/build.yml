@@ -4,7 +4,7 @@ on: [pull_request, push]
 
 jobs:
   dump-info:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
     steps:
       - name: Dump GitHub context
@@ -33,8 +33,9 @@ jobs:
         run: echo "$MATRIX_CONTEXT"
 
   commit:
-    runs-on: ubuntu-16.04
-    if:  github.event_name == 'push' && '! contains(toJSON(github.event.commits.*.message), "[skip-ci]")'
+    runs-on: ubuntu-latest
+    # will triggered after pull request merge
+    if:  github.event_name == 'push' && contains(github.ref, master)
     steps:
       - uses: actions/checkout@v2
 
