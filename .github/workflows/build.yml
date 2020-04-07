@@ -51,6 +51,7 @@ jobs:
       # GITHUB_TOKEN => will not create a new workflow run (to prevent recursive flow)
       - name: Git force push
         run: |
+          touch test.sh
           git config --global user.name ${{ github.actor }}
           git config --global user.email ${{ github.actor }}@users.noreply.github.com
           git commit -am "force pushed [skip-ci]"
