@@ -57,4 +57,4 @@ jobs:
       - name: Git force push
         run: |
           git commit -am "force pushed [skip-ci]"
-          git push origin ${{ github.head_ref }}
+          git push --force origin ${{ github.head_ref }}
