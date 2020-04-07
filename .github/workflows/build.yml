@@ -57,4 +57,5 @@ jobs:
           git config --global user.email ${{ github.actor }}@users.noreply.github.com
           git add .
           git commit -m "force pushed [skip-ci]"
+          echo "Pushing to ${{ steps.branch_name.outputs.SOURCE_BRANCH }}"
           git push --force origin ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
