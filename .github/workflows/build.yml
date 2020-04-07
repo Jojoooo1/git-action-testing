@@ -51,7 +51,6 @@ jobs:
       # GITHUB_TOKEN => will not create a new workflow run (to prevent recursive flow)
       - name: Git force push
         run: |
-          # echo $GITHUB_ACTOR
           echo ${GITHUB_ACTOR}
           echo ${{ GITHUB_ACTOR }}
           git config --global user.name $GITHUB_ACTOR
