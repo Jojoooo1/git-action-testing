@@ -48,7 +48,10 @@ jobs:
         env:
           SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
 
+      # GITHUB_TOKEN => will not create a new workflow run (to prevent recursive flow)
       - name: Git force push
         run: |
+          git config --global user.name $GITHUB_ACTOR
+          git config --global user.email $GITHUB_ACTOR@users.noreply.github.com'
           git commit -am "force pushed [skip-ci]"
           git push --force origin ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
