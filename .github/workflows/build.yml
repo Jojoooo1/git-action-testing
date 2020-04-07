@@ -32,14 +32,10 @@ jobs:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
         run: echo "$MATRIX_CONTEXT"
 
-  extract-branch:
-    runs-on: ubuntu-latest
-    if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
+  commit:
+    runs-on: ubuntu-16.04
+    if:  github.event_name == 'push' && '! contains(toJSON(github.event.commits.*.message), "[skip-ci]")'
     steps:
-      # skip ci => if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
-      # push: "ref": "refs/heads/master"
-      # pull_request: "ref": "refs/pull/1/merge"
-      # echo "::set-output name=<output name>::<value>"
       - name: Output $SOURCE_BRANCH
         id: branch_name
         run: |
@@ -50,11 +46,7 @@ jobs:
         env:
           SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
 
-  commit:
-    runs-on: ubuntu-16.04
-    if:  github.event_name == 'push' && '! contains(toJSON(github.event.commits.*.message), "[skip-ci]")'
-    steps:
       - name: Git force push
         run: |
           git commit -am "force pushed [skip-ci]"
-          git push --force origin ${{ github.head_ref }}
+          git push --force origin ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
