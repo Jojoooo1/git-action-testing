@@ -36,6 +36,8 @@ jobs:
     runs-on: ubuntu-16.04
     if:  github.event_name == 'push' && '! contains(toJSON(github.event.commits.*.message), "[skip-ci]")'
     steps:
+      - uses: actions/checkout@v2
+
       - name: Output $SOURCE_BRANCH
         id: branch_name
         run: |
@@ -47,8 +49,6 @@ jobs:
           SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
 
       - name: Git force push
-        env:
-          SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
         run: |
           git commit -am "force pushed [skip-ci]"
-          git push --force origin $SOURCE_BRANCH
+          git push --force origin ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
