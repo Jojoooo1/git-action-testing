@@ -5,7 +5,8 @@ on: [pull_request, push]
 jobs:
   dump-info:
     runs-on: ubuntu-latest
-    if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
+    # Dont need it since the git push is done with GITHUB_TOKEN
+    # if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
     steps:
       - name: Dump GitHub context
         env:
