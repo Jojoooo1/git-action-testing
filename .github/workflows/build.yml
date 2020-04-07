@@ -47,6 +47,8 @@ jobs:
           SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
 
       - name: Git force push
+        env:
+          SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
         run: |
           git commit -am "force pushed [skip-ci]"
-          git push --force origin ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
+          git push --force origin $SOURCE_BRANCH
