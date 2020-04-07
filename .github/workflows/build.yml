@@ -52,9 +52,9 @@ jobs:
 
   commit:
     runs-on: ubuntu-16.04
-    if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
+    if:  github.event_name == 'push' && "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
     steps:
       - name: Git force push
         run: |
           git commit -am "force pushed [skip-ci]"
-          git push
+          git push origin ${{ github.head_ref }}
