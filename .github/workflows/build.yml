@@ -43,7 +43,6 @@ jobs:
       - name: Sets ENV_VARIABLE
         run: |
           echo "::set-env name=SOURCE_BRANCH_ENV::${GITHUB_REF##*/}"
-          echo "::set-env name=PUSH_EVENT::$([github.event_name == 'push'] && PUSH_EVENT=true || PUSH_EVENT=false )"
 
       - name: Sets OUTPUT_VAR
         id: branch_name
@@ -52,20 +51,9 @@ jobs:
       - name: echo VAR
         run: |
           echo $SOURCE_BRANCH_ENV
-          echo $PUSH_EVENT
           echo $SOURCE_BRANCH
         env:
           SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
-
-      - name: Test PUSH_EVENT
-        if: ${PUSH_EVENT
-        run: |
-          echo "Its a push event"
-
-      - name: Test PUSH_EVENT
-        if: "! $PUSH_EVENT"
-        run: |
-          echo "Its NOT a push event"
       #
       # GITHUB_TOKEN => will not create a new workflow run (to prevent recursive flow)
       # - name: Git force push
