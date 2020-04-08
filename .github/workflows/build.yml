@@ -56,6 +56,16 @@ jobs:
           echo $SOURCE_BRANCH
         env:
           SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
+
+      - name: Test PUSH_EVENT
+        if: $PUSH_EVENT
+        run: |
+          echo "Its a push event"
+
+      - name: Test PUSH_EVENT
+        if: "! $PUSH_EVENT"
+        run: |
+          echo "Its NOT a push event"
       #
       # GITHUB_TOKEN => will not create a new workflow run (to prevent recursive flow)
       # - name: Git force push
