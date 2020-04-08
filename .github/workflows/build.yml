@@ -5,8 +5,7 @@ on: [pull_request, push]
 jobs:
   dump-info:
     runs-on: ubuntu-latest
-    # Dont need it since the git push is done with GITHUB_TOKEN
-    # if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
+    if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
     steps:
       - name: Dump GitHub context
         env:
@@ -41,7 +40,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Output $SOURCE_BRANCH
+      - name: Sets ENV_VARIABLE
+        run: |
+          echo ::set-env name=SOURCE_BRANCH_ENV::${GITHUB_REF##*/}
+      - name: echo $SOURCE_BRANCH_ENV
+        run: |
+          echo $SOURCE_BRANCH_ENV
+
+      - name: Sets OUTPUT_VAR
         id: branch_name
         run: |
           echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF##*/}
@@ -50,14 +56,14 @@ jobs:
           echo $SOURCE_BRANCH
         env:
           SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
-
+      #
       # GITHUB_TOKEN => will not create a new workflow run (to prevent recursive flow)
-      - name: Git force push
-        run: |
-          touch test.sh
-          git config --global user.name ${{ github.actor }}
-          git config --global user.email ${{ github.actor }}@users.noreply.github.com
-          git add .
-          git commit -m "force pushed [skip-ci]"
-          echo "Pushing to ${{ steps.branch_name.outputs.SOURCE_BRANCH }}"
-          git push --force origin ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
+      # - name: Git force push
+      #   run: |
+      #     touch test.sh
+      #     git config --global user.name ${{ github.actor }}
+      #     git config --global user.email ${{ github.actor }}@users.noreply.github.com
+      #     git add .
+      #     git commit -m "force pushed [skip-ci]"
+      #     echo "Pushing to ${{ steps.branch_name.outputs.SOURCE_BRANCH }}"
+      #     git push --force origin ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
