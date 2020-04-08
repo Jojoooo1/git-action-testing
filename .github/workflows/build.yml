@@ -43,7 +43,6 @@ jobs:
       - name: Sets ENV_VARIABLE
         run: |
           echo "::set-env name=SOURCE_BRANCH_ENV::${GITHUB_REF##*/}"
-          echo "::set-env name=PUSH_EVENT::[ github.event_name == 'push' ] && PUSH_EVENT=true || PUSH_EVENT=false"
 
       - name: Sets OUTPUT_VAR
         id: branch_name
@@ -53,7 +52,7 @@ jobs:
         run: |
           echo $SOURCE_BRANCH_ENV
           echo $SOURCE_BRANCH
-          echo $PUSH_EVENT
+
         env:
           SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
       #
