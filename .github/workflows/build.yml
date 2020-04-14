@@ -2,6 +2,9 @@ name: CI
 
 on: [pull_request, push]
 
+env: 
+  DOCKER_USERNAME: jojoooo1
+
 jobs:
   dump-info:
     runs-on: ubuntu-latest
@@ -54,6 +57,8 @@ jobs:
         run: |
           echo $SOURCE_BRANCH_ENV
           echo $SOURCE_BRANCH_OUTPUT
+          echo $DOCKER_USERNAME
+          
         env:
           SOURCE_BRANCH_OUTPUT: ${{ steps.branch_name.outputs.SOURCE_BRANCH_OUTPUT }}
       #
