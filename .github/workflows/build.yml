@@ -32,7 +32,7 @@ jobs:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
         run: echo "$MATRIX_CONTEXT"
 
-  commit:
+  env_variable:
     runs-on: ubuntu-latest
     # needs: dump-info
     # will triggered after pull request merge
@@ -40,16 +40,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # **ATTENTION** can not echo var in the same process $SOURCE_BRANCH_ENV will not return anything (only be used afterward)
       - name: Sets ENV_VARIABLE
         run: |
           echo "::set-env name=SOURCE_BRANCH_ENV::${GITHUB_REF##*/}"
-          echo $SOURCE_BRANCH_ENV
 
       - name: Sets OUTPUT_VAR
         id: branch_name
         run: |
           echo ::set-output name=SOURCE_BRANCH_OUTPUT::${GITHUB_REF##*/}
-          echo $SOURCE_BRANCH_OUTPUT
 
       - name: echo VAR
         run: |
