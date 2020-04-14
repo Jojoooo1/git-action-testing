@@ -43,20 +43,20 @@ jobs:
       - name: Sets ENV_VARIABLE
         run: |
           echo "::set-env name=SOURCE_BRANCH_ENV::${GITHUB_REF##*/}"
+          echo $SOURCE_BRANCH_ENV
 
       - name: Sets OUTPUT_VAR
         id: branch_name
         run: |
-          echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF##*/}
-          echo $SOURCE_BRANCH
+          echo ::set-output name=SOURCE_BRANCH_OUTPUT::${GITHUB_REF##*/}
+          echo $SOURCE_BRANCH_OUTPUT
 
       - name: echo VAR
         run: |
           echo $SOURCE_BRANCH_ENV
-          echo $SOURCE_BRANCH
-
+          echo $SOURCE_BRANCH_OUTPUT
         env:
-          SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
+          SOURCE_BRANCH_OUTPUT: ${{ steps.branch_name.outputs.SOURCE_BRANCH_OUTPUT }}
       #
       # GITHUB_TOKEN => will not create a new workflow run (to prevent recursive flow)
       # - name: Git force push
