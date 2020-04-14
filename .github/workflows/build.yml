@@ -57,6 +57,7 @@ jobs:
         run: |
           echo $SOURCE_BRANCH_ENV
           echo $SOURCE_BRANCH_OUTPUT
+          echo ${{ env.SOURCE_BRANCH_OUTPUT }}
           echo $DOCKER_USERNAME
           echo ${{ env.DOCKER_USERNAME }}
           echo ${ env.DOCKER_USERNAME }
