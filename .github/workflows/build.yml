@@ -48,6 +48,8 @@ jobs:
         id: branch_name
         run: |
           echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF##*/}
+          echo $SOURCE_BRANCH
+
       - name: echo VAR
         run: |
           echo $SOURCE_BRANCH_ENV
