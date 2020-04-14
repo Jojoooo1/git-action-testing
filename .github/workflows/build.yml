@@ -57,10 +57,13 @@ jobs:
         run: |
           echo $SOURCE_BRANCH_ENV
           echo ${SOURCE_BRANCH_ENV}/test
+
           echo $SOURCE_BRANCH_OUTPUT
-          echo ${{ env.SOURCE_BRANCH_OUTPUT }}
           echo $DOCKER_USERNAME
+
+          echo ${{ env.SOURCE_BRANCH_OUTPUT }}
           echo ${{ env.DOCKER_USERNAME }}
+          
         env:
           SOURCE_BRANCH_OUTPUT: ${{ steps.branch_name.outputs.SOURCE_BRANCH_OUTPUT }}
 
