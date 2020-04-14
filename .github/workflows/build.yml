@@ -59,6 +59,7 @@ jobs:
           echo $SOURCE_BRANCH_OUTPUT
           echo $DOCKER_USERNAME
           echo ${{ env.DOCKER_USERNAME }}
+          echo ${ env.DOCKER_USERNAME }
         env:
           SOURCE_BRANCH_OUTPUT: ${{ steps.branch_name.outputs.SOURCE_BRANCH_OUTPUT }}
 
