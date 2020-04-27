@@ -1,9 +1,8 @@
+# ${{ }} gets github env, ${} gets context env
+
 name: CI for master
 
 on:
-  # pull_request:
-  #   types: [assigned, opened, synchronize, reopened]
-  #   branches: [master]
   push:
     branches: [master] 
   # pull_request # d. (opened, synchronize, or reopened) #
@@ -62,7 +61,7 @@ jobs:
       - name: echo VAR
         run: |
           echo $SOURCE_BRANCH_ENV
-          echo ${SOURCE_BRANCH_ENV}/test
+          echo ${SOURCE_BRANCH_ENV}
 
           echo $SOURCE_BRANCH_OUTPUT
           echo $DOCKER_USERNAME

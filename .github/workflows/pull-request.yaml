@@ -1,26 +1,29 @@
 # ${{ }} gets github env, ${} gets context env
 
-name: CI for release
+name: CI for pull request from master
 
 on:
-  push:
-    branches: [release-*] 
+  pull_request:
+    branches: [master]
+    # types: [opened, synchronize, reopened]
   # pull_request # d. (opened, synchronize, or reopened) #
   # GitHub sends the pull_request event to the base repository and no pull request events occur on the forked repository.
-
-env: 
+env:
   DOCKER_USERNAME: jojoooo1
 
 jobs:
   dump-info:
     runs-on: ubuntu-latest
-    # 
     if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
     steps:
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+        run: |
+          echo $GITHUB_HEAD_REF # Only set for forked repositories. The branch of the head repository.
+          echo $GITHUB_BASE_REF # Only set for forked repositories. The branch of the base repository.
+
+          echo "$GITHUB_CONTEXT"
       - name: Dump job context
         env:
           JOB_CONTEXT: ${{ toJson(job) }}
@@ -49,7 +52,7 @@ jobs:
     # if:  github.event_name == 'push' && contains(github.ref, 'master')
     steps:
       - uses: actions/checkout@v2
-      # Steps will be executed in order, if one fails following steps will not be executed 
+      # Steps will be executed in order, if one fails following steps will not be executed
       # **ATTENTION** can not echo var in the same step $SOURCE_BRANCH_ENV will not return anything (can only be used in next step)
       - name: Sets ENV_VARIABLE
         run: |
@@ -70,14 +73,11 @@ jobs:
 
           echo ${{ env.SOURCE_BRANCH_OUTPUT }}
           echo ${{ env.DOCKER_USERNAME }}
-          
+
         env:
           SOURCE_BRANCH_OUTPUT: ${{ steps.branch_name.outputs.SOURCE_BRANCH_OUTPUT }}
-
         # echo ${ DOCKER_USERNAME }
-          
-          
-        
+
       #
       # GITHUB_TOKEN => will not create a new workflow run (to prevent recursive flow)
       # - name: Git force push
