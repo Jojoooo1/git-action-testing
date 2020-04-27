@@ -95,3 +95,11 @@ jobs:
       #     git commit -m "force pushed [skip-ci]"
       #     echo "Pushing to ${{ steps.branch_name.outputs.SOURCE_BRANCH }}"
       #     git push --force origin ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
+
+  dump-info-on-closed:
+    runs-on: ubuntu-latest
+    # 
+    if: "contains(toJSON(github.head_ref), 'release-') && github.event.action == 'closed' && github.event.pull_request.merged == true && ! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
+    steps:
+      - name: Dump GitHub context
+        run: echo "PULL REQUEST MERGED & CLOSED"
