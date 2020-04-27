@@ -3,7 +3,7 @@ name: CI for pull request from master
 on:
   pull_request:
     branches: [master]
-    types: [opened, synchronize]
+    types: [opened, synchronize, reopened]
   # pull_request # d. (opened, synchronize, or reopened) #
   # GitHub sends the pull_request event to the base repository and no pull request events occur on the forked repository.
 env: 
@@ -60,7 +60,7 @@ jobs:
       - name: echo VAR
         run: |
           echo $SOURCE_BRANCH_ENV
-          echo ${SOURCE_BRANCH_ENV}/test
+          echo ${SOURCE_BRANCH_ENV}
 
           echo $SOURCE_BRANCH_OUTPUT
           echo $DOCKER_USERNAME

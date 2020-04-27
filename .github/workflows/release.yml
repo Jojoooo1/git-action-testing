@@ -60,7 +60,7 @@ jobs:
       - name: echo VAR
         run: |
           echo $SOURCE_BRANCH_ENV
-          echo ${SOURCE_BRANCH_ENV}/test
+          echo ${SOURCE_BRANCH_ENV}
 
           echo $SOURCE_BRANCH_OUTPUT
           echo $DOCKER_USERNAME
