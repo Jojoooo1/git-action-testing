@@ -1,6 +1,6 @@
 # ${{ }} gets github env, ${} gets context env
 
-name: CI for release
+name: CI on_push to release-v*
 
 on:
   push:

@@ -1,6 +1,6 @@
 # ${{ }} gets github env, ${} gets context env
 
-name: CI for master
+name: CI on_push to master
 
 on:
   push:
