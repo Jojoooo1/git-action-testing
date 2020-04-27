@@ -1,3 +1,5 @@
+# ${{ }} gets github env, ${} gets context env
+
 name: CI for release
 
 on:

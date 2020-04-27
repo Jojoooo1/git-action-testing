@@ -1,3 +1,5 @@
+# ${{ }} gets github env, ${} gets context env
+
 name: CI for pull request from master
 
 on:
@@ -18,7 +20,9 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
-          echo ${{ github.head_ref }}
+          echo $GITHUB_HEAD_REF # Only set for forked repositories. The branch of the head repository.
+          echo $GITHUB_BASE_REF # Only set for forked repositories. The branch of the base repository.
+
           echo "$GITHUB_CONTEXT"
       - name: Dump job context
         env:
