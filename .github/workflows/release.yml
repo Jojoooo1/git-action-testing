@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [release-*] # d. (opened, synchronize, or reopened) #
+    branches: [master] # d. (opened, synchronize, or reopened) #
 
 env: 
   DOCKER_USERNAME: jojoooo1
