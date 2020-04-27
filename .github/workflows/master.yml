@@ -1,9 +1,9 @@
 name: CI for master
 
 on:
-  # pull_request:
-  #   types: [assigned, opened, synchronize, reopened]
-  #   branches: [master]
+  pull_request:
+    branches: [master]
+    types: [opened]
   push:
     branches: [master] 
   # pull_request # d. (opened, synchronize, or reopened) #
