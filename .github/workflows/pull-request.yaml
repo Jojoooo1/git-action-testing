@@ -1,14 +1,14 @@
 # ${{ }} gets github env, ${} gets context env
 
-name: CI on pull_request from master
+name: CI on pull_request and push to develop
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, closed] # closed
-    branches: [master]
-    # types: [opened, synchronize, reopened]
-  # pull_request # d. (opened, synchronize, or reopened) #
   # GitHub sends the pull_request event to the base repository and no pull request events occur on the forked repository.
+  pull_request:
+    branches: [develop] # d. (opened, synchronize, or reopened)
+  push:
+    branches: [develop] # 
+
 env:
   DOCKER_USERNAME: jojoooo1
 
