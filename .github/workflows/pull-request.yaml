@@ -58,11 +58,13 @@ jobs:
       - name: Sets ENV_VARIABLE
         run: |
           echo "::set-env name=SOURCE_BRANCH_ENV::${GITHUB_REF##*/}"
+          # ONLY useful on: push 
 
       - name: Sets OUTPUT_VAR
         id: branch_name
         run: |
           echo ::set-output name=SOURCE_BRANCH_OUTPUT::${GITHUB_REF##*/}
+          # ONLY useful on: push 
 
       - name: echo VAR
         run: |
