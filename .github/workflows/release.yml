@@ -1,11 +1,16 @@
 # ${{ }} gets github env, ${} gets context env
 
-name: CI on_push to release-v*
+name: CI on pull_request from release-v*
+
+# on:
+#   push:
+#     branches: [release-*] 
 
 on:
-  push:
-    branches: [release-*] 
-  # pull_request # d. (opened, synchronize, or reopened) #
+  pull_request:
+    types: [opened, synchronize, reopened, closed] # d. (opened, synchronize, or reopened)
+    branches: [master]
+    
   # GitHub sends the pull_request event to the base repository and no pull request events occur on the forked repository.
 
 env: 
@@ -15,7 +20,7 @@ jobs:
   dump-info:
     runs-on: ubuntu-latest
     # 
-    if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
+    if: "contains(toJSON(github.head_ref), 'release-') && ! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
     steps:
       - name: Dump GitHub context
         env:
