@@ -2,9 +2,15 @@
 
 name: CI on_push to release-v*
 
+# on:
+#   push:
+#     branches: [release-*] 
+
 on:
-  push:
-    branches: [release-*] 
+  pull_request:
+    types: [opened, synchronize, reopened, closed] # closed
+    branches: [master]
+    
   # pull_request # d. (opened, synchronize, or reopened) #
   # GitHub sends the pull_request event to the base repository and no pull request events occur on the forked repository.
 
@@ -15,7 +21,7 @@ jobs:
   dump-info:
     runs-on: ubuntu-latest
     # 
-    if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
+    if: "contains(toJSON(github.head_ref), 'release-') && ! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
     steps:
       - name: Dump GitHub context
         env:
