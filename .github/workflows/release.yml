@@ -21,7 +21,7 @@ jobs:
   dump-info:
     runs-on: ubuntu-latest
     # 
-    if: "contains(toJSON(github.head_ref), 'release-') && ! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
+    if: "contains(toJSON(github.head_ref), 'release-') && github.event.action != 'closed' && ! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
     steps:
       - name: Dump GitHub context
         env:
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     # needs: dump-info
     # will triggered after pull request merge
-    if: "contains(toJSON(github.head_ref), 'release-') && ! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
+    if: "contains(toJSON(github.head_ref), 'release-') && github.event.action != 'closed' && ! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
     steps:
       - uses: actions/checkout@v2
       # Steps will be executed in order, if one fails following steps will not be executed 
@@ -96,7 +96,7 @@ jobs:
       #     echo "Pushing to ${{ steps.branch_name.outputs.SOURCE_BRANCH }}"
       #     git push --force origin ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
 
-  dump-info-on-closed:
+  dump-info-on-closed-and-merged:
     runs-on: ubuntu-latest
     # 
     if: "contains(toJSON(github.head_ref), 'release-') && github.event.action == 'closed' && github.event.pull_request.merged == true && ! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
