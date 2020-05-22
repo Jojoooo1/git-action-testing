@@ -1,4 +1,4 @@
-# ${{ }} gets github env, ${} gets context env
+# ${{ }} uses github context, ${} gets VM env
 
 name: CI on pull_request and push to develop
 
