@@ -46,9 +46,9 @@ jobs:
           echo $SHA_REF
           echo "CURLIIIIIIING"
 
-          curl -X POST -H "Authorization: token ${{secrets.GITHUB_TOKEN}}" \
+          curl -X POST -H "Authorization: token ${{secrets.GITHUB_TOKEN}}" -H "Accept: application/vnd.github.v3+json" \
             --data '{"state": "success", "description": "Success!", "target_url": "test-url"}' \
-            "https://github.com/api/v3/repos/Jojoooo1/spring-boot-using-gitflow/statuses/$SHA_REF"
+            "https://api.github.com/repos/Jojoooo1/spring-boot-using-gitflow/statuses/$SHA_REF"
 
 
           # curl -X POST -u ${{ secrets.GITHUB_TOKEN }}:x-oauth-basic \
