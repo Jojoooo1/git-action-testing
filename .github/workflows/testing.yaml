@@ -24,7 +24,7 @@ jobs:
           # [[ "${#TAG_LIST[@]}" -ne 3 ]] && echo "$RELEASE_VERSION is not a valid semantic version" && exit 1
           #
           echo "CURLIIIIIIING"
-          curl --request POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          curl -X POST -u ${{ secrets.GITHUB_TOKEN }}:x-oauth-basic \
             --data '{"state": "success", "description": "Success!", "target_url": "test-url"}' \
             https://github.com/api/v3/repos/Jojoooo1/spring-boot-using-gitflow/statuses/$SHA_REF
 
