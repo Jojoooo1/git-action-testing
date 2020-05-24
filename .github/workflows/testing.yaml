@@ -47,7 +47,7 @@ jobs:
           echo "CURLIIIIIIING"
 
           curl -X POST -H "Authorization: token ${{secrets.DEPLOY}}" -H "Accept: application/vnd.github.v3+json" \
-            --data '{"state": "success", "description": "Success!", "target_url": "test-url", "context": "continuous-integration/jenkins"}' \
+            --data '{"state": "success", "description": "Success!", "context": "continuous-integration/jenkins"}' \
             "https://api.github.com/repos/Jojoooo1/git-action-testing/statuses/$SHA_REF"
 
 
