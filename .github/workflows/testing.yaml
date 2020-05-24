@@ -3,7 +3,7 @@
 name: Testing
 
 on:
-  push:
+  pull_request:
     branches: [master]
     
 jobs:
@@ -22,7 +22,7 @@ jobs:
           fi
           # bug: not working
           # [[ "${#TAG_LIST[@]}" -ne 3 ]] && echo "$RELEASE_VERSION is not a valid semantic version" && exit 1
-
+          #
           echo "CURLIIIIIIING"
           curl -X POST "https://github.com/api/v3/repos/Jojoooo1/spring-boot-using-gitflow/statuses/$SHA_REF" \
             -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
