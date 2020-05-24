@@ -10,6 +10,12 @@ jobs:
   release_variable:
     runs-on: ubuntu-latest
     steps:
+      ## Setup ## 
+      - uses: actions/checkout@v2
+        # by default use github.sha => on pull request a new SHA is created
+        with:
+          ref: ${{ github.head_ref }} # That is why we set ref to head_ref (current branch)
+          
       - name: Sets RELEASE_VERSION
         run: |
           RELEASE_VERSION=2.3.1
