@@ -26,7 +26,7 @@ jobs:
           echo "CURLIIIIIIING"
           curl -X POST -u ${{ secrets.GITHUB_TOKEN }}:x-oauth-basic \
             --data '{"state": "success", "description": "Success!", "target_url": "test-url"}' \
-            https://github.com/api/v3/repos/Jojoooo1/spring-boot-using-gitflow/statuses/$SHA_REF
+            "https://github.com/api/v3/repos/Jojoooo1/spring-boot-using-gitflow/statuses/$SHA_REF"
 
           # curl -X POST "https://github.com/api/v3/repos/Jojoooo1/spring-boot-using-gitflow/statuses/$SHA_REF" \
           #   -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
