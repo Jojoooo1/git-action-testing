@@ -5,6 +5,9 @@ name: Testing
 on:
   pull_request:
     branches: [master]
+
+env:
+  GITHUB_USERNAME: jojoooo1
     
 jobs:
   release_variable:
@@ -15,7 +18,7 @@ jobs:
         # by default use github.sha => on pull request a new SHA is created
         with:
           ref: ${{ github.head_ref }} # That is why we set ref to head_ref (current branch)
-          
+
       - name: Sets RELEASE_VERSION
         run: |
           RELEASE_VERSION=2.3.1
@@ -28,7 +31,9 @@ jobs:
           fi
           # bug: not working
           # [[ "${#TAG_LIST[@]}" -ne 3 ]] && echo "$RELEASE_VERSION is not a valid semantic version" && exit 1
-          #
+      
+      - name: Commits status
+        run: |
           git config --global user.name $GITHUB_USERNAME
           git config --global user.email "$GITHUB_USERNAME@users.noreply.github.com"
           
@@ -51,3 +56,5 @@ jobs:
           #   -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
           #   -H 'Content-Type: application/json' \
           #   --data '{"state": "success", "context": "test-build-deploy-release-candidate"}'
+          
+      
