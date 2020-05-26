@@ -23,7 +23,7 @@ jobs:
         run: |
           RELEASE_VERSION=2.3.1
           
-          TAG_LIST=$(echo $RELEASE_VERSION | tr '.' ' ')
+          TAG_LIST=($(echo $RELEASE_VERSION | tr '.' ' '))
 
           if [[ "${#TAG_LIST[@]}" -ne 3 ]]; then
             echo "$RELEASE_VERSION is not a valid semantic version"
