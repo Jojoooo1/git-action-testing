@@ -33,7 +33,7 @@ jobs:
           fi
           
           [[ "${#TAG_LIST[@]}" -ne 3 ]] && echo "$RELEASE_VERSION is not a valid semantic version" && exit 1
-          
+
           echo "END"
       
       - name: Commits status
@@ -41,14 +41,12 @@ jobs:
           git config --global user.name $GITHUB_USERNAME
           git config --global user.email "$GITHUB_USERNAME@users.noreply.github.com"
           
-          echo "$RANDOM" >> test.txt
           git add .
           git commit -m "version updated to $RELEASE_NAME in pom.xml."
           #
           git push origin $GITHUB_HEAD_REF
           SHA_REF=$(git rev-parse HEAD)
           echo $SHA_REF
-          echo "CURLIIIIIIING"
 
           curl -X POST -H "Authorization: token ${{secrets.DEPLOY}}" -H "Accept: application/vnd.github.v3+json" \
             --data '{"state": "success", "description": "Success!", "context": "continuous-integration/jenkins"}' \
