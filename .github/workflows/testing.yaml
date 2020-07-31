@@ -16,8 +16,7 @@ jobs:
       - name: SKIP with MESSAGE
         if: "!contains(github.event.head_commit.message, '[skip test]')"
         run: |
-          echo ${{ github.event.commits.*.message }}
-          echo TEST
+          echo SKIPPED TEST
 
       ## Setup ## 
       - uses: actions/checkout@v2
