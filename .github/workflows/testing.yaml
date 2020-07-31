@@ -13,6 +13,12 @@ jobs:
   release_variable:
     runs-on: ubuntu-latest
     steps:
+      ## Setup ###
+      - uses: actions/checkout@v2
+        # by default use github.sha => on pull request a new SHA is created
+        with:
+          ref: ${{ github.head_ref }} # That is why we set ref to head_ref (current branch)
+
       - name: SKIP with MESSAGE
         if: "!contains(toJson(github.event.commits.*.message), '[skip-test]')"
         env:
@@ -20,13 +26,6 @@ jobs:
         run: |
           echo $COMMIT
           echo SKIPPED TEST
-
-      ## Setup ###
-      - uses: actions/checkout@v2
-
-        # by default use github.sha => on pull request a new SHA is created
-        with:
-          ref: ${{ github.head_ref }} # That is why we set ref to head_ref (current branch)
 
       - name: Sets RELEASE_VERSION
         run: |
