@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: [develop] # d. (opened, synchronize, or reopened)
   push:
-    branches: [develop] # 
+    branches: [develop] #
 
 env:
   DOCKER_USERNAME: jojoooo1
@@ -17,6 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
     steps:
+      - name: SKIP with MESSAGE
+        if: "! contains(toJSON(github.event.commits.*.message), '[skip-test]')"
+        run: |
+          echo ${github.event.commits.*.message}
+
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
