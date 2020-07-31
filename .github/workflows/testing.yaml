@@ -8,11 +8,16 @@ on:
 
 env:
   GITHUB_USERNAME: jojoooo1
-    
+
 jobs:
   release_variable:
     runs-on: ubuntu-latest
     steps:
+      - name: SKIP with MESSAGE
+        if: "! contains(toJSON(github.event.commits.*.message), '[skip-test]')"
+        run: |
+          echo ${github.event.commits.*.message}
+
       ## Setup ## 
       - uses: actions/checkout@v2
         # by default use github.sha => on pull request a new SHA is created
@@ -22,7 +27,7 @@ jobs:
       - name: Sets RELEASE_VERSION
         run: |
           RELEASE_VERSION=2.3.1
-          
+
           TAG_LIST=($(echo $RELEASE_VERSION | tr '.' ' '))
 
           if [[ "${#TAG_LIST[@]}" -ne 3 ]]; then
@@ -31,23 +36,23 @@ jobs:
           else
             echo "VALID SEMANTIC_VERSION"
           fi
-          
+
           [[ "${#TAG_LIST[@]}" -ne 3 ]] && echo "$RELEASE_VERSION is not a valid semantic version" && exit 1
 
           echo "END"
-      
+
       - name: Commits status
         run: |
           # git config --global user.name $GITHUB_USERNAME
           # git config --global user.email "$GITHUB_USERNAME@users.noreply.github.com"
-          
+
           # git add .
           # git commit -m "version updated to $RELEASE_NAME in pom.xml."
-          
+
           # git push origin $GITHUB_HEAD_REF
           # SHA_REF=$(git rev-parse HEAD)
           # echo $SHA_REF
-          
+
           # Needs to setup the token first
           # curl -X POST -H "Authorization: token ${{secrets.DEPLOY}}" -H "Accept: application/vnd.github.v3+json" \
           #   --data '{"state": "success", "description": "Success!", "context": "continuous-integration/jenkins"}' \
@@ -59,5 +64,3 @@ jobs:
           #   -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
           #   -H 'Content-Type: application/json' \
           #   --data '{"state": "success", "context": "test-build-deploy-release-candidate"}'
-          
-      
