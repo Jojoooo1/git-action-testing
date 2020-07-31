@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: SKIP with MESSAGE
-        if: "!contains(github.event.head_commit.message, '[skip-test]')"
+        if: "!contains(toJson(github.event.head_commit.message, '[skip-test]')"
         run: |
           echo SKIPPED TEST
           echo {{ github.event.head_commit.message }}
