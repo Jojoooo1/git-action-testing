@@ -2,7 +2,12 @@
 
 name: Testing
 
-on: [push]
+on:
+  pull_request:
+    branches: [master]
+
+# VERY IMPORTANT on PUSH YOU GET THE COMMIT MESSAGE
+# YOU DO NOT IN PULL_REQUEST
 
 env:
   GITHUB_USERNAME: jojoooo1
@@ -16,16 +21,12 @@ jobs:
       - name: "Checkout Code"
         uses: actions/checkout@v2
 
-      - name: SKIP with MESSAGE
-        # if: "!contains(toJson(github.event.commits.*.message), '[skip-test]')"
-        env:
-          COMMIT: ${{ toJson(github.event.commits) }}
-          HEAD: ${{ toJson(github.event.head_commit ) }}
-
+      - name: get commit message
         run: |
-          echo $HEAD
-          echo $COMMIT
-          echo test
+          echo ::set-env name=commitmsg::$(git log --format=%B -n 1 ${{ github.event.after }})
+
+      - name: show commit message
+        run: echo $commitmsg
   # release_variable:
   #   runs-on: ubuntu-latest
   #   steps:
