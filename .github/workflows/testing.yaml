@@ -16,7 +16,7 @@ jobs:
       - name: SKIP with MESSAGE
         if: "!contains(toJson(github.event.commits.*.message), '[skip-test]')"
         env:
-          COMMIT: ${{ toJson(github.event.commits.*.message) }}
+          COMMIT: ${{ toJson(github.event.commits) }}
         run: |
           echo $COMMIT
           echo SKIPPED TEST
