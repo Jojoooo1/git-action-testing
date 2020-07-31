@@ -14,13 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: SKIP with MESSAGE
-        if: "!contains(toJson(github.event.head_commit.message), '[skip-test]')"
+        if: "!contains(toJson(github.event.commits.*.message), '[skip-test]')"
         env:
-          VAR: ${{ toJson(github.event) }}
-          COMMIT: ${{ toJson(github.event.head_commit.message) }}
+          COMMIT: ${{ toJson(github.event.commits.*.message) }}
         run: |
           echo $COMMIT
-          echo $VAR
           echo SKIPPED TEST
 
       ## Setup ###
