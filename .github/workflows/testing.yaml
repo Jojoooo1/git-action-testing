@@ -21,7 +21,7 @@ jobs:
       - name: "Checkout Code"
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.head_ref }}
 
       - name: Get Commit Message
         run: |
