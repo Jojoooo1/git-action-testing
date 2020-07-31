@@ -19,10 +19,11 @@ jobs:
         with:
           ref: ${{ github.head_ref }} # That is why we set ref to head_ref (current branch)
 
+      # Message is populated by checkout action
       - name: SKIP with MESSAGE
-        if: "!contains(toJson(github.event.commits.*.message), '[skip-test]')"
+        # if: "!contains(toJson(github.event.commits.*.message), '[skip-test]')"
         env:
-          COMMIT: ${{ toJson(github.event.commits) }}
+          COMMIT: ${{ toJson(github.event) }}
         run: |
           echo $COMMIT
           echo SKIPPED TEST
