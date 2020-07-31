@@ -11,6 +11,7 @@ env:
 
 jobs:
   skip:
+    if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
     runs-on: ubuntu-latest
     steps:
       ## Setup ## 
@@ -19,9 +20,14 @@ jobs:
 
       - name: SKIP with MESSAGE
         # if: "!contains(toJson(github.event.commits.*.message), '[skip-test]')"
+        env:
+          COMMIT: ${{ toJson(github.event.commits) }}
+          HEAD: ${{ toJson(github.event.head_commit ) }}
+
         run: |
-          echo ${{ github.event.head_commit }}
-          echo ${{ github.event.commits }}
+          echo $HEAD
+          echo $COMMIT
+          echo test
   # release_variable:
   #   runs-on: ubuntu-latest
   #   steps:
