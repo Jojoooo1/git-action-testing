@@ -16,9 +16,8 @@ jobs:
       ## Setup ###
       - uses: actions/checkout@v2
         # by default use github.sha => on pull request a new SHA is created
-        with:
-          ref: ${{ github.head_ref }} # That is why we set ref to head_ref (current branch)
-
+        # with:
+        #   ref: ${{ github.head_ref }} # That is why we set ref to head_ref (current branch)
       # Message is populated by checkout action
       - name: SKIP with MESSAGE
         # if: "!contains(toJson(github.event.commits.*.message), '[skip-test]')"
