@@ -23,7 +23,7 @@ jobs:
           echo $VAR
           echo SKIPPED TEST
 
-      ## Setup ## 
+      ## Setup ###
       - uses: actions/checkout@v2
 
         # by default use github.sha => on pull request a new SHA is created
