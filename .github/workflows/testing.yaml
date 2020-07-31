@@ -20,15 +20,12 @@ jobs:
       ## Setup ## 
       - name: "Checkout Code"
         uses: actions/checkout@v2
-
-      - name: GITHUB CONTEXT
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Get Commit Message
         run: |
-          MSG=$(git log --no-merges -1 --oneline)
+          MSG=$(git log --format=%B -n 1 ${{ github.event.after }})
           echo "::set-env name=COMMIT_MESSAGE::${MSG}"
 
       - name: "Meesage"
