@@ -15,11 +15,14 @@ env:
 jobs:
   dump-info:
     runs-on: ubuntu-latest
+
     steps:
       - name: Dump GitHub context
         id: set_env
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
+        outputs:
+          JOBS_ENV: ${{ steps.set_env.outputs.JOBS_ENV }}
         run: |
           echo $GITHUB_HEAD_REF # Only set for forked repositories. The branch of the head repository.
           echo $GITHUB_BASE_REF # Only set for forked repositories. The branch of the base repository.
