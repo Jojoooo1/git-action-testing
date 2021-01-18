@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Dump GitHub context
-        id: set-env
+        id: set_env
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
@@ -53,7 +53,7 @@ jobs:
       - name: Dump matrix context
         run: |
           echo "STEPS_ENV: ${{ env.VARIABLE_AVAILABLE_IN_STEPS }}"
-          echo "JOBS_ENV: ${{ jobs.dump-info.steps.set-env.outputs.JOBS_ENV }}"
+          echo "JOBS_ENV: ${{ needs.dump-info.steps.set-env.outputs.JOBS_ENV }}"
 
       
 
@@ -90,7 +90,7 @@ jobs:
           echo ${{ env.SOURCE_BRANCH_OUTPUT }}
           echo ${{ env.DOCKER_USERNAME }}
 
-          echo "JOBS_ENV: ${{ jobs.dump-info.steps.set-env.outputs.JOBS_ENV }}"
+          echo "JOBS_ENV: ${{ needs.dump-info.steps.set-env.outputs.JOBS_ENV }}"
 
         env:
           SOURCE_BRANCH_OUTPUT: ${{ steps.branch_name.outputs.SOURCE_BRANCH_OUTPUT }}
