@@ -53,7 +53,8 @@ jobs:
 
       - name: Dump test_env context
         run: |
-          echo "STEPS_ENV: ${STEPS_ENV}" # ${{ }} DOES NOT WORK FOR STEP_VAR
+          echo "STEPS_ENV: $STEPS_ENV" # ${{ }} DOES NOT WORK FOR STEP_VARx
+          echo "STEPS_ENV: ${STEPS_ENV}" # ${{ }} DOES NOT WORK FOR STEP_VARx
           echo "JOBS_ENV: ${{ needs.dump-info.steps.set_env.outputs.JOBS_ENV }}"
 
       
