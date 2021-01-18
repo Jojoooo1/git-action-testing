@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Dump GitHub context
+        id: set-env
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
@@ -25,8 +26,8 @@ jobs:
 
           echo "$GITHUB_CONTEXT"
 
-          echo "TEST_ENV='TESTTTTTTTTTT'" >> $GITHUB_ENV
-          echo "TEST_ENV=TESTTTTTTTTTT" >> $GITHUB_ENV
+          echo "STEPS_ENV='VARIABLE_AVAILABLE_IN_STEPS'" >> $GITHUB_ENV
+          echo '::set-output name=JOBS_ENV::VARIABLE_AVAILABLE_IN_JOBS'
 
       - name: Dump job context
         env:
@@ -48,6 +49,12 @@ jobs:
         env:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
         run: echo "$MATRIX_CONTEXT"
+
+      - name: Dump matrix context
+        run: |
+          echo "STEPS_ENV: ${{ env.VARIABLE_AVAILABLE_IN_STEPS }}"
+          echo "JOBS_ENV: ${{ jobs.dump-info.steps.set-env.outputs.JOBS_ENV }}"
+
       
 
   env_variable:
@@ -63,7 +70,8 @@ jobs:
       - name: Sets ENV_VARIABLE
         run: |
           echo "SOURCE_BRANCH_ENV=${GITHUB_REF##*/}" >> $GITHUB_ENV
-          # ONLY useful on: push 
+          # ONLY useful on: push
+          
 
       - name: Sets OUTPUT_VAR
         id: branch_name
@@ -82,7 +90,7 @@ jobs:
           echo ${{ env.SOURCE_BRANCH_OUTPUT }}
           echo ${{ env.DOCKER_USERNAME }}
 
-          echo ${{ env.TEST_ENV }}
+          echo "JOBS_ENV: ${{ jobs.dump-info.steps.set-env.outputs.JOBS_ENV }}"
 
         env:
           SOURCE_BRANCH_OUTPUT: ${{ steps.branch_name.outputs.SOURCE_BRANCH_OUTPUT }}
