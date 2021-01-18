@@ -60,7 +60,7 @@ jobs:
         run: |
           echo "STEPS_ENV: $STEPS_ENV"
           echo "STEPS_ENV: ${STEPS_ENV}"
-          echo "JOBS_ENV: ${{ needs.dump-info.steps.set_env.outputs.JOBS_ENV }}"
+          echo "JOBS_ENV: ${{ needs.dump-info.outputs.JOBS_ENV }}" # DO NOT WORK
 
       
 
@@ -97,7 +97,7 @@ jobs:
           echo ${{ env.SOURCE_BRANCH_OUTPUT }}
           echo ${{ env.DOCKER_USERNAME }}
 
-          echo "JOBS_ENV: ${{ needs.dump-info.steps.set_env.outputs.JOBS_ENV }}"
+          echo "JOBS_ENV: ${{ needs.dump-info.outputs.JOBS_ENV }}"
 
         env:
           SOURCE_BRANCH_OUTPUT: ${{ steps.branch_name.outputs.SOURCE_BRANCH_OUTPUT }}
