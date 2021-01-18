@@ -26,8 +26,8 @@ jobs:
 
           echo "$GITHUB_CONTEXT"
 
-          echo "STEPS_ENV='VARIABLE_AVAILABLE_IN_STEPS'" >> $GITHUB_ENV
-          echo '::set-output name=JOBS_ENV::VARIABLE_AVAILABLE_IN_JOBS'
+          echo "STEPS_ENV='hello world'" >> $GITHUB_ENV
+          echo "::set-output name=JOBS_ENV::'hello world'"
 
       - name: Dump job context
         env:
@@ -45,14 +45,16 @@ jobs:
         env:
           STRATEGY_CONTEXT: ${{ toJson(strategy) }}
         run: echo "$STRATEGY_CONTEXT"
+
       - name: Dump matrix context
         env:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
         run: echo "$MATRIX_CONTEXT"
 
-      - name: Dump matrix context
+      - name: Dump test_env context
         run: |
-          echo "STEPS_ENV: ${{ env.VARIABLE_AVAILABLE_IN_STEPS }}"
+          echo "STEPS_ENV { }: ${STEPS_ENV}"
+          echo "STEPS_ENV {{ }}: ${{STEPS_ENV}}"
           echo "JOBS_ENV: ${{ needs.dump-info.steps.set-env.outputs.JOBS_ENV }}"
 
       
