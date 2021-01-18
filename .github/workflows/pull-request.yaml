@@ -62,13 +62,13 @@ jobs:
       # **ATTENTION** can not echo var in the same step $SOURCE_BRANCH_ENV will not return anything (can only be used in next step)
       - name: Sets ENV_VARIABLE
         run: |
-          echo "::set-env name=SOURCE_BRANCH_ENV::${GITHUB_REF##*/}"
+          echo "SOURCE_BRANCH_ENV=${GITHUB_REF##*/}" >> $GITHUB_ENV
           # ONLY useful on: push 
 
       - name: Sets OUTPUT_VAR
         id: branch_name
         run: |
-          echo ::set-output name=SOURCE_BRANCH_OUTPUT::${GITHUB_REF##*/}
+          echo "SOURCE_BRANCH_OUTPUT=${GITHUB_REF##*/}" >> $GITHUB_ENV
           # ONLY useful on: push 
 
       - name: echo VAR
