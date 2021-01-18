@@ -5,6 +5,8 @@ name: Testing
 on:
   pull_request:
     branches: [master]
+  push:
+    branches: [master]
 
 # VERY IMPORTANT on PUSH YOU GET THE COMMIT MESSAGE
 # YOU DO NOT IN PULL_REQUEST
