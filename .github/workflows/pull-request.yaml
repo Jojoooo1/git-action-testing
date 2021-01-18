@@ -52,9 +52,10 @@ jobs:
         run: echo "$MATRIX_CONTEXT"
 
       - name: Dump test_env context
+        # NOTE: ${{ }} DOES NOT WORK FOR STEP_VAR
         run: |
-          echo "STEPS_ENV: $STEPS_ENV" # ${{ }} DOES NOT WORK FOR STEP_VARx
-          echo "STEPS_ENV: ${STEPS_ENV}" # ${{ }} DOES NOT WORK FOR STEP_VARx
+          echo "STEPS_ENV: $STEPS_ENV"
+          echo "STEPS_ENV: ${STEPS_ENV}"
           echo "JOBS_ENV: ${{ needs.dump-info.steps.set_env.outputs.JOBS_ENV }}"
 
       
